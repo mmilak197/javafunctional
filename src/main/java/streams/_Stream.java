@@ -4,7 +4,9 @@ import imperative.Main;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static streams._Stream.Gender.*;
 
@@ -18,7 +20,8 @@ public class _Stream {
                 new Person("Aisha", FEMALE),
                 new Person("Alex", MALE),
                 new Person("Alice", FEMALE),
-                new Person("Bob", PREFER_NOT_TO_SAY)
+                new Person("Mateusz", MALE)
+
         );
 
         people.stream()
@@ -29,6 +32,36 @@ public class _Stream {
         people.stream()
                 .map(person -> person.name)
                 .mapToInt(String::length)
+                .forEach(System.out::println);
+
+        Predicate<Person> personPredicate = person -> FEMALE.equals(person.gender);
+        // in this case we check if gender all people is FEMALE
+        boolean containsOnlyFemals = people.stream()
+                .allMatch(personPredicate);
+
+        System.out.println(containsOnlyFemals);
+
+        // in this case we check if is one or more person which gender is FEMALE
+        boolean containsOneOrMoreFemals = people.stream()
+                .anyMatch(personPredicate);
+
+        System.out.println(containsOneOrMoreFemals);
+
+        Predicate<Person> personPredicateV2 = person -> PREFER_NOT_TO_SAY.equals(person.gender);
+
+        // in this case we check if anybody has PREFER_NOT_TO_SAY gender
+        boolean containsNonePerferNotToSay = people.stream()
+                .noneMatch(personPredicateV2);
+
+        System.out.println(containsNonePerferNotToSay);
+
+        // in this case we get people who have name longer then 6 chars
+        // another examples https://www.geeksforgeeks.org/stream-dropwhile-method-in-java-with-examples/
+        List<Person> peopleWhichNameIsLongerThan5Chars = people.stream()
+                .dropWhile(person -> person.name.length() <= 5)
+                .collect(Collectors.toList());
+
+        peopleWhichNameIsLongerThan5Chars.stream()
                 .forEach(System.out::println);
     }
 
