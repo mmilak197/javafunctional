@@ -55,14 +55,44 @@ public class _Stream {
 
         System.out.println(containsNonePerferNotToSay);
 
+
+        // in tihs case we get people who have name shorter or equal 5 chars
+        // in shortcut we get people which match to Predicate
+        System.out.println("People which name is shorter or equal 5 chars");
+        List<Person> peopleWhichNameIsShorterOrEqual5Chars = people.stream()
+                .takeWhile(person -> person.name.length() <= 5)
+                .collect(Collectors.toList());
+
+        peopleWhichNameIsShorterOrEqual5Chars.stream()
+                .forEach(System.out::println);
+
         // in this case we get people who have name longer then 6 chars
+        // in shortcut we get people which doesn't match to Predicate
+        // this method is opposite to takeWhile()
         // another examples https://www.geeksforgeeks.org/stream-dropwhile-method-in-java-with-examples/
+        System.out.println("People which name is  longer than 5 chars");
         List<Person> peopleWhichNameIsLongerThan5Chars = people.stream()
                 .dropWhile(person -> person.name.length() <= 5)
                 .collect(Collectors.toList());
 
         peopleWhichNameIsLongerThan5Chars.stream()
                 .forEach(System.out::println);
+
+
+
+        List<Integer> numbers = List.of(4, 6, 8, 4, 3, 5, 9);
+
+        // in this case we use peek(). This functional interface take Consumer the same as forEach()
+        // so use peek() and forEach() we can print all number
+        // but is big diffrence between peek() and forEach()
+        // forEach() is terminate method which means after use stream is closed
+        // however peek() is not terminate method so we can use it to print number before filter
+        // https://programuj.pl/blog/java8-strumienie-cz3-peek-map-collect
+        numbers.stream()
+                .peek(it -> System.out.println("Before filter " + it))
+                .filter(number -> number > 4)
+                .forEach(n -> System.out.println("After filter " + n));
+
     }
 
     static class Person {
