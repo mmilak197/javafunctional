@@ -79,7 +79,6 @@ public class _Stream {
                 .forEach(System.out::println);
 
 
-
         List<Integer> numbers = List.of(4, 6, 8, 4, 3, 5, 9);
 
         // in this case we use peek(). This functional interface take Consumer the same as forEach()
@@ -92,6 +91,14 @@ public class _Stream {
                 .peek(it -> System.out.println("Before filter " + it))
                 .filter(number -> number > 4)
                 .forEach(n -> System.out.println("After filter " + n));
+
+
+        // forEachOrder make the same what forEach but
+        // if we use paraller streams forEachOrder process data from stream according order in stream
+        // but forEach in this case doesn't guarantee so order can be another then original
+        // https://howtodoinjava.com/java8/java-stream-foreachordered/
+        people.stream()
+                .forEachOrdered(System.out::println);
 
     }
 
