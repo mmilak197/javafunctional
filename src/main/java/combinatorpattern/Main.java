@@ -22,6 +22,8 @@ public class Main {
         // if value we can store customer in db
 
         // Using combinator pattern
+        // Apply is method run all validation
+        //all method is lazy wihout use apply method it cannot run
         ValidationResult result = isEmailValid()
                 .and(isPhoneValid())
                 .and(isAdult())
